@@ -26,17 +26,20 @@ Order allow,deny
 allow from all
 
 ## Repository konfigurieren
+```
 git clone <url to this repo>
 cp config-default-inc.php config.inc.php
 composer install
-
+```
+```
 mkdir /var/signature
 mkdir /var/signature/log
 mkdir /var/signature/archive
-
+```
+```
 chown www-data /var/signature/log
 chown www-data /var/signature/archive
-
+```
 Die Datei /sign/.htaccess muss angepasst werden um nur jenen Usern zugriff zu erlauben die Dokumente manuell signieren
 dürfen.
 
