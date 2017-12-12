@@ -1,0 +1,13 @@
+AuthType Basic
+AuthName "Signatur Server"
+AuthUserFile /var/signature/.htpasswd
+Require valid-user
+
+DirectoryIndex index.php
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	RewriteRule ^$ index.php [QSA,L]
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>

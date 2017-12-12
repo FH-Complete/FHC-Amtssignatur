@@ -1,0 +1,22 @@
+{
+	 "repositories": [
+	{
+		"type": "package",
+		"package": {
+			"name": "enyo/dropzone",
+			"version": "4.2.0",
+			"type": "drupal-library",
+			"source": {
+				"url": "https://github.com/enyo/dropzone",
+				"type": "git",
+				"reference": "origin/master"
+			}
+		}
+	}
+	],
+	"require": {
+		"jacwright/restserver": "dev-master",
+		"components/bootstrap": "3.3.5",
+		"enyo/dropzone": "^4.3"
+	}
+}
