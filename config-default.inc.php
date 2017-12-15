@@ -17,15 +17,15 @@ define('SIGNATURE_SERVER_VERIFY_SSL',true);
 
 /**
  * Log Folder
- * DEFAULT: /var/signature/log/
+ * DEFAULT: /var/lib/signature/log/
  */
-define('SIGNATURE_LOG_PATH','/var/signature/log/');
+define('SIGNATURE_LOG_PATH','/var/lib/signature/log/');
 
 /**
  * Archive Folder
- * DEFAULT: /var/signature/archive/
+ * DEFAULT: /var/lib/signature/archive/
  */
-define('SIGNATURE_ARCHIVE_PATH','/var/signature/archive/');
+define('SIGNATURE_ARCHIVE_PATH','/var/lib/signature/archive/');
 
 /**
  * Available Profiles

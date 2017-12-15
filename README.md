@@ -18,15 +18,15 @@ apt-get install composer
 ```
 ## Apache konfigurieren
 ```
+a2enmod ssl
 a2enmod rewrite
 a2enmod ldap
 a2enmod authnz_ldap
 ```
-Apache VHost Configuration anpassen
+Apache VHost Directory Configuration anpassen
 ```
 AllowOverride AuthConfig Limit FileInfo Indexes
-Order allow,deny
-allow from all
+Require all granted
 ```
 
 ## Repository konfigurieren
@@ -36,13 +36,13 @@ cp config-default-inc.php config.inc.php
 composer install
 ```
 ```
-mkdir /var/signature
-mkdir /var/signature/log
-mkdir /var/signature/archive
+mkdir /var/lib/signature
+mkdir /var/lib/signature/log
+mkdir /var/lib/signature/archive
 ```
 ```
-chown www-data /var/signature/log
-chown www-data /var/signature/archive
+chown www-data /var/lib/signature/log
+chown www-data /var/lib/signature/archive
 ```
 Die Datei /sign/.htaccess muss angepasst werden um nur jenen Usern Zugriff zu erlauben die Dokumente manuell signieren
 dürfen.
