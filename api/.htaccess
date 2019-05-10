@@ -1,6 +1,6 @@
 AuthType Basic
 AuthName "Signatur Server"
-AuthUserFile /var/signature/.htpasswd
+AuthUserFile /var/lib/signature/.htpasswd
 Require valid-user
 
 DirectoryIndex index.php

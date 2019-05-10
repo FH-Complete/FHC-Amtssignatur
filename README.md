@@ -12,6 +12,7 @@ https://joinup.ec.europa.eu/solution/pdf
 
 ## Betriebssystem vorbereiten
 ```
+apt-get install default-jre
 apt-get install apache2
 apt-get install php php-curl
 apt-get install composer
@@ -49,3 +50,9 @@ dürfen.
 
 Die Datei /api/.htaccess muss angepasst werden um nur jenen Usern Zugriff zu erlauben die Dokumente über die API
 signieren dürfen.
+
+Mit folgendem Befehl kann eine .htpasswd Datei mit User/Passwort erstellt werden:
+```
+cd /var/lib/signature/
+htpasswd -c .htpasswd USERNAME
+```
