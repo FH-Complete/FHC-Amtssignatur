@@ -1,5 +1,6 @@
 <?php
-/* Copyright (C) 2017 fhcomplete.org
+/**
+ *  Copyright (C) 2022 fhcomplete.net
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as
@@ -16,15 +17,24 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  *
  * Authors: Andreas Oesterreicher <andreas.oesterreicher@technikum-wien.at>
+ *
  */
- /**
-  * Controller to handle Connection beween Rest Service and Signature Class
-  */
+
 require_once(dirname(__FILE__).'/../config.inc.php');
 require_once(dirname(__FILE__).'/signatur.class.php');
+require_once(dirname(__FILE__).'/Signature.php');
 
+/**
+ * Controller to handle Connection beween Rest Service and Signature Class
+ */
 class RestController
 {
+	const ERROR = 1;
+	const SUCCESS = 0;
+
+	// -------------------------------------------------------------------------------------------------------------------
+	// Public methods
+
 	/**
 	 * Sign a Document
 	 *
@@ -34,32 +44,78 @@ class RestController
 	 */
 	public function sign($data)
 	{
-		if(!isset($data->document))
+		if (!isset($data->document))
 		{
-			return $this->error('Document missing');
+		         return $this->_error('Document missing');
 		}
-		if(!isset($data->profile))
+		if (!isset($data->profile))
 		{
-			return $this->error('Profile missing');
+		         return $this->_error('Profile missing');
 		}
-		if(!isset($data->user))
+		if (!isset($data->user))
 		{
-			return $this->error('User missing');
+			return $this->_error('User missing');
 		}
 
 		$signatur = new signatur($data->user, 'api/'.$_SERVER['PHP_AUTH_USER']);
-		if($signatur->sign($data->document, $data->profile))
+		if ($signatur->sign($data->document, $data->profile))
 		{
-			return array('success'=>'true', 'document'=>$signatur->signed_document_b64);
+			return $this->_success($signatur->signed_document_b64);
 		}
 		else
 		{
-			return $this->error($signatur->errormsg);
+			return $this->_error($signatur->errormsg);
 		}
 	}
 
-	private function error($msg)
+	/**
+	 * Lists the signatures inside the posted file
+	 * @url POST /list
+	 */
+	public function list($data)
 	{
-		return array('success'=>'false', 'errormsg'=>$msg);
+		try
+		{
+			// Get the list of signatures, if fine then return a success
+			return $this->_success(Signature::list($data));
+		}
+		catch(Exception $e)
+		{
+			// Otherwise return an error
+			return $this->_error($e->getMessage());
+		}
+	}
+
+	// -------------------------------------------------------------------------------------------------------------------
+	// Private methods
+
+	/**
+	 *
+	 */
+	private function _error($retval = null, $code = null)
+	{
+		return $this->_createReturnObject($code, self::ERROR, $retval);
+	}
+
+	/**
+	 *
+	 */
+	private function _success($retval = null, $code = null)
+	{
+		return $this->_createReturnObject($code, self::SUCCESS, $retval);
+	}
+
+	/**
+	 *
+	 */
+	private function _createReturnObject($code, $error, $retval)
+	{
+		$returnObject = new stdClass();
+		$returnObject->code = $code;
+		$returnObject->error = $error;
+		$returnObject->retval = $retval;
+		
+		return $returnObject;
 	}
 }
+
