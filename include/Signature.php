@@ -90,7 +90,7 @@ class Signature
 			if (stripos($line, self::SIGN_HEADER) === 0)
 			{
 				// And there are line already copied
-				if (count($signArray) > 0)
+				if (is_array($signArray) && count($signArray) > 0)
 				{
 					$resultList[] = $signArray; // copy such lines as one element of the array of signatures
 					$signArray = array(); // empty the array of lines for a signatures
@@ -103,7 +103,7 @@ class Signature
 		}
 
 		// Copy the last lines if they are there
-		if (count($signArray) > 0) $resultList[] = $signArray;
+		if (is_array($signArray) && count($signArray) > 0) $resultList[] = $signArray;
 
 		return $resultList;
 	}
